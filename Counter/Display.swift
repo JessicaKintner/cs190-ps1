@@ -151,15 +151,26 @@ class Display: UIView {
     // make the 15 SSCs show -1.23456790 99.
     // Except for the bug fix in drawSegment, there is no need to modify any code outside of this function.
     override func drawRect(rect: CGRect) {
+    //    let numSegments = 15
         let context = UIGraphicsGetCurrentContext()!
         let bounds = self.bounds
         let segmentHeight = bounds.size.height
+        let segmentWidth = bounds.size.width
         let xOrigin = bounds.origin.x
         let yOrigin = bounds.origin.y
         // This needs re-doing. The segmentWidth is the whole view width. It should only be one-fifteenth of that.
-        let sscRect = CGRectMake(xOrigin, yOrigin, bounds.size.width, segmentHeight)
+        //  attempted
+        let mySegmentWidth = segmentWidth/15.0
+        var myXOrigin = xOrigin
+        //     let sscRect = CGRectMake(myXOrigin, yOrigin, mySegmentWidth, segmentHeight)
         // This needs completing. It only draws one SSC. It needs to be put in a loop to show all 15 SSCs.
-        drawSSC(context, sscRect:sscRect, mask:segmentMasks[8])
+        for var i = 0; i < digits; ++i {
+            let sscRect = CGRectMake(myXOrigin, yOrigin, mySegmentWidth, segmentHeight)
+        //  original line
+        //    drawSSC(context, sscRect:sscRect, mask:segmentMasks[8])
+             drawSSC(context, sscRect:sscRect, mask: masks[i] )
+             myXOrigin = myXOrigin + mySegmentWidth
+        }
     }
-
+    
 }
